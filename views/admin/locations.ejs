@@ -1,0 +1,146 @@
+<style>
+    .error {
+        color: red;
+    }
+    td{
+        max-width: 100px; 
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;;
+    }
+</style>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title p-2">All Locations</h3>
+                        <div class="text-right">
+                            <!-- <a href="javascript:void(0)" type="button" class="btn btn-primary create">Add new user</a> -->
+                            <a href="javascript:void(0)" type="button" class="btn btn-dark refresh">Refresh</a>
+                        </div>
+                    </div>
+                    <form method="post" id="frm-example">
+                        <div class="card-body">
+                            <table class="table data-table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Open 24/7</th>
+                                        <th>Restricted Access</th>
+                                        <th>Payment Required</th>
+                                        <!-- <th>Stations</th> -->
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <button type="submit" class="btn btn-danger" id="multiple_delete_btn" disabled>Delete selected <span style="display: none" id="multiple_user_delete_loader"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade view-user" id="view_location_modal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="user_modal_title">View Location</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <!-- <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" id="view_image_preview" src="" alt="User Image">
+                            </div> -->
+                            <h2 class=" text-center" id="name"></h2>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">User : </b> <span class="text-left w-100" id="view_user">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Address : </b> <span class="text-left w-100" id="view_address">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Phone : </b> <span class="text-left w-100" id="view_phone">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Hours : </b> <span class="text-left w-100" id="view_hour">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Price : </b> <span class="text-left w-100" id="view_price">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Clearance meter : </b> <span class="text-left w-100" id="view_meter">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Parking Level : </b> <span class="text-left w-100" id="view_parking_level">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Open 24/7 : </b> <span class="text-left w-100" id="view_is_full_time">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Restricted Access : </b> <span class="text-left w-100" id="view_restricted_access">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Payment required : </b> <span class="text-left w-100" id="view_payment_required">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Stations : </b> <span class="text-left w-100" id="view_station">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Amenities : </b> <span class="text-left w-100" id="view_amenities">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Parking Amenities : </b> <span class="text-left w-100" id="view_parking">-</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between flex-nowrap">
+                                        <b class="flex-shrink-0 mr-2">Status : </b> <span class="text-left w-100" id="view_status">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

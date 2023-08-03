@@ -1,0 +1,186 @@
+<style>
+    .error {
+        color: red;
+    }
+    /* td{
+        max-width: 100px; 
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;;
+    } */
+    .ck-editor__editable_inline {
+        min-height: 100px;
+    }
+</style>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title p-2">All Blogs</h3>
+                        <div class="text-right">
+                            <a href="javascript:void(0)" type="button" class="btn btn-primary create">Add new blog</a>
+                            <a href="javascript:void(0)" type="button" class="btn btn-dark refresh">Refresh</a>
+                        </div>
+                    </div>
+                    <form method="post" id="frm-example">
+                        <div class="card-body">
+                            <table class="table data-table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Views</th>
+                                        <th>Published Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <button type="submit" class="btn btn-danger" id="multiple_delete_btn" disabled>Delete selected <span style="display: none" id="multiple_user_delete_loader"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ADD/EDIT MODAL -->
+    <div class="modal fade" id="add_edit_modal" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close cross" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add_edit_form">
+                        <div class="col-md-12" style="margin: auto; border:skyblue solid 1px">          
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="store">Title: <span class="required">*</span> <span id="title-error" class="error-message temp"></span></label>
+                                            <input type="text"
+                                            class="form-control"
+                                            name="title" 
+                                            id="title"
+                                            placeholder="Blog title"
+                                            >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="state">Categories: <span class="required">*</span> <span id="category-error" class="error-message temp"></span></label>
+                                            <select name="category[]" id="category" class="category" multiple="multiple" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                                                <!-- <option disabled>-- Please select blog category</option> -->
+                                                <% for(var i=0; i<categories.length; i++) {%>
+                                                    <option value="<%= categories[i].id %>"><%= categories[i].name %></option>
+                                                    <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="state">Tags: <span class="required">*</span> <span id="tag-error" class="error-message temp"></span></label>
+                                                <select name="tag[]" id="tag" class="tag" multiple="multiple" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                                                    <!-- <option disabled>-- Please select blog category</option> -->
+                                                    <% for(var i=0; i<tags.length; i++) {%>
+                                                        <option value="<%= tags[i].id %>"><%= tags[i].name %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="description">Description: <span class="required">*</span> <span id="description-error" class="error-message temp"></span></label>
+                                                    <textarea class="form-control ck-editor__editable_inline"
+                                                    name="description"
+                                                    id="description"
+                                                    placeholder="Store Description"
+                                                    rows="3"
+                                                    ></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="image" class="col-form-label">Image: <span class="required">*</span> <span id="image-error" class="error-message temp"></span></label>
+                                                    <input type="file" name="image" id="image" class="form-control p-1" placeholder="Enter Select Image">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <img src="" 
+                                                        alt="pic" 
+                                                        id="image-show" 
+                                                        width="100px" 
+                                                        height="70px" 
+                                                        style="border: solid 1px black; display:none"
+                                                        >
+                                                    </div>                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="id" id="id">
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="close-btn btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <input type="submit" class="save btn btn-primary" value="">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ADD/EDIT MODAL OVER -->
+            
+            <div class="modal fade view-user" id="view_blog_modal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding: 7px 20px;">
+                            <h4 class="modal-title" id="user_modal_title">View Blog</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="padding: 0.5rem;">
+                            <div class="card card-primary card-outline">
+                                <div class="card-body box-profile">
+                                    <div class="text-center">
+                                        <img class="profile-user-img img-fluid img-circle" id="view_image_preview" src="" alt="User Image">
+                                    </div>
+                                    <h3 class="profile-username text-center" id="name"></h3>
+                                    <ul class="list-group list-group-unbordered mb-3">
+                                        <li class="list-group-item store_li">
+                                            <b>Visits : </b> <span  id="view_visit">-</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Categories : </b> <span  id="view_categories">-</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Tags : </b> <span  id="view_tags">-</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Description : </b> <span  id="view_description">-</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Status : </b> <span  id="view_status">-</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>

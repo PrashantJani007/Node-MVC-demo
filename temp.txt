@@ -1,0 +1,188 @@
+<div class="form-group col-md-6 roles">
+                                        <label for="role" class="col-form-label">User Role: <span class="required" id="confirm_password_red">*</span> <span id="role-error" class="error-message temp"></span></label>
+                                        <select name="role" class="form-control" id="role">
+                                            <option disabled selected>-- Select User Role --</option>
+                                            <option value="<%= roles.OWNER_ROLE %>">Owner</option>
+                                            <option value="<%= roles.WAITRESS_ROLE %>">Waitress</option>
+                                        </select>
+                                    </div>
+
+                                    // const plug = plugs[locations.Stations[0].plug_type_id];
+        // console.log(locations.Stations[0].plug_type_id);
+        // console.log(locations[0].Stations[0].plug_type_id);
+        // console.log(process.cwd()+plugs[0].image);  
+        
+        // locations.forEach(location => {
+            
+        //     location.Station.forEach(station=>{
+
+        //         location.LocationStation
+
+        //     });
+
+        // });
+
+        <div class="modal fade" id="add_edit_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="user_modal_title"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- <form method="post" name="add_edit_form" id="add_edit_form" enctype="multipart/form-data"> -->
+                    <form method="post" name="add_edit_form" id="add_edit_form" enctype="multipart/form-data">
+                        <img src="#" width="50px" height="50px" style="display: none" class="load">
+                        <input type="hidden" name="user_id" id="user_id">
+                        <!-- <input type="hidden" name="store_id" id="str_id"> -->
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <input type="hidden" name="id" id="id" value="">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="name" class="col-form-label">Name: <span class="required">*</span> <span id="name-error" class="error-message temp"></span></label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Please enter first name">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="last_name" class="col-form-label">Last Name: <span class="required">*</span> <span id="last_name-error" class="error-message temp"></span></label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Please enter last name">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="email" class="col-form-label">Email: <span class="required">*</span> <span id="email-error" class="error-message temp"></span></label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Please enter email">
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6">
+                                        <label for="password" class="col-form-label">Password:  <span class="required" id="password_red">*</span> <span id="password-error" class="error-message temp"></span></label>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Please enter password">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="password_confirmation" class="col-form-label">Confirm Password: <span class="required" id="confirm_password_red">*</span> <span id="password_confirmation-error" class="error-message temp"></span></label>
+                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Please enter confirm password">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="mobile_number" class="col-form-label">Mobile Number: <span class="required" id="confirm_password_red">*</span> <span id="mobile_number-error" class="error-message temp"></span></label>
+                                        <input type="text" class="form-control" id="mobile_number" name="mobile_number" placeholder="Please enter mobile number">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="date_of_birth" class="col-form-label">Date of birth: <span class="required" id="confirm_password_red">*</span> <span id="date_of_birth-error" class="error-message temp"></span></label>
+                                        <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Please enter date of birth">
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6">
+                                        <label for="gender" class="col-form-label">Gender: <span class="required" id="confirm_password_red">*</span> <span id="gender-error" class="error-message temp"></span></label>
+                                        <select name="gender" id="gender" class="form-control">
+                                            <option disabled selected>-- Select Gender --</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Other</option>
+                                        </select>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group col-md-6 stores-div">
+                                        <label for="store_id" class="col-form-label">Stores: <span class="required" id="confirm_password_red">*</span> <span id="store_id-error" class="error-message temp"></span></label>
+                                        <select name="store_id" class="form-control" class="store_id" id="store_id">
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="col-12 row">
+                                        <div class="form-group col-md-6">
+                                            <label for="recipient-name" class="col-form-label">Image:</label><span id="image-error" class="error-message temp"></span>
+                                            <input type="file" name="image" id="image" class="form-control p-1" placeholder="Enter Select Image">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <img src="" 
+                                                alt="pic" 
+                                                id="image-show" 
+                                                width="100px" 
+                                                height="70px" 
+                                                style="border: solid 1px black; display:none"
+                                                >
+                                            </div>                                   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="save"><span style="display: none" id="loader"><i class="fa fa-spinner fa-spin"></i></span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        include:[{
+                model:Station,
+                attributes:{
+                    include:['id','name','latitude','longitude']
+                },
+                //     include:[{
+                //         model:Plug,
+                //         attributes:['id','name']
+                //     },{
+                //         model:Network,
+                //         attributes:['id','name']
+                //     }]
+                // },{
+                //     model:LocationAmenity,
+                //     attributes:{
+                //         exclude:['created_at','updated_at']
+                //     },
+                //     include:{
+                //         model:Amenity,
+                //         attributes:['id','name']
+                //     }
+                // },{
+                //     model:LocationParkingAttributes,
+                //     attributes:{
+                //         exclude:['created_at','updated_at']
+                //     },
+                //     include:{
+                //         model:ParkingAttributes,
+                //         attributes:['id','name']
+                //     }
+            }]
+
+            SELECT `Category`.`id`, `Category`.`name`, COUNT(`BlogCategories`.`category_id`) AS `total` FROM `Categories` AS `Category` LEFT OUTER JOIN `BlogCategories` AS `BlogCategories` ON `Category`.`id` = `BlogCategories`.`category_id` GROUP BY `Category`.`id`;
+
+            // const tags = await Tags.findAll({
+        //     limit:5,
+        //     attributes: [
+        //         "id",
+        //         "name",
+        //         [sequelize.fn("COUNT", sequelize.col("BlogTags.tag_id")), "total"],
+        //     ],
+        //     include: [
+        //         {
+        //             model: BlogTag,
+        //             attributes: [],
+        //         },
+        //     ],
+        //     group: ["Tags.id"],
+        //     order:[['total','desc']]
+        // });
+
+         // const tags = await Tags.findAll({
+        //     attributes: {
+        //         include: [
+        //             [
+        //                 sequelize.literal(`(SELECT tag_id FROM BlogTags WHERE BlogTags."tag_id" = Tags.id)`),
+        //                 'tag_id'
+        //             ]
+        //         ]
+        //     },
+        //     // limit: 2,
+        //     order: [[sequelize.literal('"id"'), 'DESC']],
+        //     logging: console.log
+        // });
+
+        ,{
+    ckfinder: {
+        uploadUrl: 'http://localhost:4000/upload'
+    },
+}
